@@ -1,0 +1,45 @@
+class Solution {
+public:
+    void insertattail(ListNode* &head, ListNode* &tail, ListNode* &temp){
+        tail->next=temp;
+        tail=temp;
+    }
+    ListNode* oddEvenList(ListNode* head) {
+        if(head==NULL) return NULL;
+        ListNode *temp=head;
+        ListNode *oddhead=new ListNode(-1);
+        ListNode *oddtail=oddhead;
+        ListNode *evenhead=new ListNode(-1);
+        ListNode *eventail=evenhead;
+        bool flag=true;
+        while(temp){
+            if(flag==true){
+                insertattail(oddhead,oddtail,temp);
+                flag=false;
+            }
+            else{
+                insertattail(evenhead,eventail,temp);
+                flag=true;
+            }
+            temp=temp->next;
+        }
+
+        if(oddhead->next==NULL){
+            delete oddhead;
+            ListNode *t=evenhead;
+            evenhead=evenhead->next;
+            eventail->next=NULL;
+            delete t;
+            return evenhead;
+        }
+        else{
+            oddtail->next=evenhead->next;
+            eventail->next=NULL;
+            ListNode *t=oddhead;
+            oddhead=oddhead->next;
+            delete t;
+            delete evenhead;
+            return oddhead;
+        }
+    }
+};
